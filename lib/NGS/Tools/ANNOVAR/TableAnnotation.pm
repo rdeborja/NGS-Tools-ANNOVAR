@@ -47,12 +47,12 @@ sub annotate_variants_with_gene_info_and_variant_databases {
 		protocol => {
 			isa			=> 'ArrayRef[Str]',
 			required	=> 0,
-			default		=> ['refGene', 'snp132', '1000g2012feb_all', 'esp6500si_all', 'cg69', 'cosmic67']
+			default		=> ['refGene', 'ensGene', 'snp132', '1000g2012feb_all', 'esp6500si_all', 'cg69', 'cosmic67']
 			},
 		operation => {
 			isa			=> 'ArrayRef[Str]',
 			required	=> 0,
-			default		=> ['g', 'f', 'f', 'f', 'f', 'f']
+			default		=> ['g', 'g', 'f', 'f', 'f', 'f', 'f']
 			},
 		database_dir => {
 			isa			=> 'Str',
@@ -68,21 +68,50 @@ sub annotate_variants_with_gene_info_and_variant_databases {
 			isa			=> 'Str',
 			required	=> 0,
 			default		=> 'table_annovar.pl'
+			},
+		target => {
+			isa			=> 'Str',
+			required	=> 0,
+			default		=> ''
 			}
 		);
+
+	# if the target argument is passed with a non-empty string, add the -bed parameter
+	# to the table_annovar.pl program and include 
+	if ('' ne $args{'target'} && -e $args{'target'}) {
+		push(@{ $args{'protocol'} }, 'bed');
+		push(@{ $args{'operation'} }, 'r')
+		}
 	my $protocol = join(',', @{ $args{'protocol'} });
 	my $operation = join(',', @{ $args{'operation'} });
 	my $program = $args{'annovar_program'};
-	my $cmd = join(' ',
-		$program,
-		$args{'file'},
-		$args{'database_dir'},
-		'--protocol', $protocol,
-		'--operation', $operation,
-		'--buildver', $args{'buildver'},
-		'--remove',
-		'--otherinfo'
-		);
+
+	my $cmd;
+	if ('' ne $args{'target'} && -e $args{'target'}) {
+		$cmd = join(' ',
+			$program,
+			$args{'file'},
+			$args{'database_dir'},
+			'--protocol', $protocol,
+			'--operation', $operation,
+			'--buildver', $args{'buildver'},
+			'--remove',
+			'--otherinfo',
+			'--bedfile', $args{'target'}
+			);
+		}
+	else {
+		$cmd = join(' ',
+			$program,
+			$args{'file'},
+			$args{'database_dir'},
+			'--protocol', $protocol,
+			'--operation', $operation,
+			'--buildver', $args{'buildver'},
+			'--remove',
+			'--otherinfo'
+			);
+		}
 	my %return_values = (
 		cmd => $cmd,
 		output => join('.', $args{'file'}, 'hg19_multianno.txt')

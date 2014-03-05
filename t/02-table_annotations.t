@@ -25,15 +25,15 @@ lives_ok
 	'Class instantiated';
 my $file = 'annovar.input.txt';
 my $annovar_run = $annovar->annotate_variants_with_gene_info_and_variant_databases(
-	file => $file
+	file => $file,
+	target => 'target.bed'
 	);
-
 my $expected_cmd = join(' ',
 	'table_annovar.pl',
 	'annovar.input.txt',
 	'/usr/local/sw/annovar/annovar.20140212/humandb/',
-	'--protocol refGene,snp132,1000g2012feb_all,esp6500si_all,cg69,cosmic67',
-	'--operation g,f,f,f,f,f',
+	'--protocol refGene,ensGene,snp132,1000g2012feb_all,esp6500si_all,cg69,cosmic67',
+	'--operation g,g,f,f,f,f,f',
 	'--buildver hg19',
 	'--remove',
 	'--otherinfo'

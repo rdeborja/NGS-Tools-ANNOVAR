@@ -13,9 +13,20 @@ my $builder = Module::Build->new(
         'Module::Build' => 0,
     },
     build_requires => {
-        'Test::More' => 0,
+        'Test::More'                => 0,
+        'Test::Moose'               => 0,
+        'MooseX::ClassCompositor'   => 0,
+        'Test::Exception'           => 0,
+        'FindBin'                   => 0,
+        'File::Temp'                => 0
     },
     requires => {
+        'Moose::Role'               => 0,
+        'MooseX::Params::Validate'  => 0,
+        'namespace::autoclean'      => 0,
+        'autodie'                   => 0,
+        'File::Basename'            => 0,
+        'Moose'                     => 0
         #'ABC'              => 1.6,
         #'Foo::Bar::Module' => 5.0401,
     },

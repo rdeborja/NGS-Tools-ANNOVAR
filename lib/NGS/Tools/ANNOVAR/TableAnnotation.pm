@@ -78,7 +78,7 @@ sub annotate_variants_with_gene_info_and_variant_databases {
 
 	# if the target argument is passed with a non-empty string, add the -bed parameter
 	# to the table_annovar.pl program and include 
-	if ('' ne $args{'target'} && -e $args{'target'}) {
+	if ('' ne $args{'target'} && -e join('/', $args{'database_dir'}, $args{'target'})) {
 		push(@{ $args{'protocol'} }, 'bed');
 		push(@{ $args{'operation'} }, 'r')
 		}
@@ -87,7 +87,7 @@ sub annotate_variants_with_gene_info_and_variant_databases {
 	my $program = $args{'annovar_program'};
 
 	my $cmd;
-	if ('' ne $args{'target'} && -e $args{'target'}) {
+	if ('' ne $args{'target'} && -e join('/', $args{'database_dir'}, $args{'target'})) {
 		$cmd = join(' ',
 			$program,
 			$args{'file'},

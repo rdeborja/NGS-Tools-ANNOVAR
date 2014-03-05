@@ -26,17 +26,19 @@ lives_ok
 my $file = 'annovar.input.txt';
 my $annovar_run = $annovar->annotate_variants_with_gene_info_and_variant_databases(
 	file => $file,
-	target => 'target.bed'
+	database_dir => "$Bin/example/target",
+	target => 'target.txt'
 	);
 my $expected_cmd = join(' ',
 	'table_annovar.pl',
 	'annovar.input.txt',
-	'/usr/local/sw/annovar/annovar.20140212/humandb/',
-	'--protocol refGene,ensGene,snp132,1000g2012feb_all,esp6500si_all,cg69,cosmic67',
-	'--operation g,g,f,f,f,f,f',
+	"$Bin/example/target",
+	'--protocol refGene,ensGene,snp132,1000g2012feb_all,esp6500si_all,cg69,cosmic67,bed',
+	'--operation g,g,f,f,f,f,f,r',
 	'--buildver hg19',
 	'--remove',
-	'--otherinfo'
+	'--otherinfo',
+	'--bedfile target.txt'
 	);
 
 is($annovar_run->{'cmd'}, $expected_cmd, "ANNOVAR command matches expected");

@@ -1,9 +1,13 @@
 package NGS::Tools::ANNOVAR;
 use Moose;
 
+with 'NGS::Tools::ANNOVAR::GeneAnnotation';
+with 'NGS::Tools::ANNOVAR::TableAnnotation';
+
 use 5.006;
 use strict;
 use warnings FATAL => 'all';
+use autodie;
 
 =head1 NAME
 

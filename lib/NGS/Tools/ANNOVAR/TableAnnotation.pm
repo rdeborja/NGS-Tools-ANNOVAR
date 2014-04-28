@@ -7,7 +7,6 @@ use warnings FATAL => 'all';
 use namespace::autoclean;
 use autodie;
 use File::Basename;
-use Data::Dumper;
 
 =head1 NAME
 

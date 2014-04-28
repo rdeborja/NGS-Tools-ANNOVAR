@@ -27,8 +27,6 @@ my $builder = Module::Build->new(
         'autodie'                   => 0,
         'File::Basename'            => 0,
         'Moose'                     => 0
-        #'ABC'              => 1.6,
-        #'Foo::Bar::Module' => 5.0401,
     },
     add_to_cleanup     => [ 'NGS-Tools-ANNOVAR-*' ],
     create_makefile_pl => 'traditional',

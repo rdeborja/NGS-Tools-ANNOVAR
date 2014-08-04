@@ -2,24 +2,24 @@
 use ExtUtils::MakeMaker;
 WriteMakefile
 (
-  'PL_FILES' => {},
-  'INSTALLDIRS' => 'site',
   'NAME' => 'NGS::Tools::ANNOVAR',
-  'EXE_FILES' => [],
   'VERSION_FROM' => 'lib/NGS/Tools/ANNOVAR.pm',
   'PREREQ_PM' => {
-                   'Moose::Role' => 0,
-                   'namespace::autoclean' => 0,
-                   'Test::Exception' => 0,
-                   'FindBin' => 0,
-                   'Test::More' => 0,
-                   'Test::Moose' => 0,
-                   'autodie' => 0,
-                   'File::Temp' => 0,
-                   'MooseX::Params::Validate' => 0,
                    'File::Basename' => 0,
+                   'File::Temp' => 0,
+                   'FindBin' => 0,
+                   'Moose' => 0,
+                   'Moose::Role' => 0,
                    'MooseX::ClassCompositor' => 0,
-                   'Moose' => 0
-                 }
+                   'MooseX::Params::Validate' => 0,
+                   'Test::Exception' => 0,
+                   'Test::Moose' => 0,
+                   'Test::More' => 0,
+                   'autodie' => 0,
+                   'namespace::autoclean' => 0
+                 },
+  'INSTALLDIRS' => 'site',
+  'EXE_FILES' => [],
+  'PL_FILES' => {}
 )
 ;

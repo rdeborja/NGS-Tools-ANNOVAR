@@ -3,7 +3,7 @@
    "author" : [
       "Richard de Borja <richard.deborja@sickkids.ca>"
    ],
-   "dynamic_config" : 1,
+   "dynamic_config" : 0,
    "generated_by" : "Module::Build version 0.4205",
    "license" : [
       "artistic_2"
@@ -46,13 +46,16 @@
          "version" : "0.03"
       },
       "NGS::Tools::ANNOVAR::GeneAnnotation" : {
-         "file" : "lib/NGS/Tools/ANNOVAR/GeneAnnotation.pm"
+         "file" : "lib/NGS/Tools/ANNOVAR/GeneAnnotation.pm",
+         "version" : 0
       },
       "NGS::Tools::ANNOVAR::TableAnnotation" : {
-         "file" : "lib/NGS/Tools/ANNOVAR/TableAnnotation.pm"
+         "file" : "lib/NGS/Tools/ANNOVAR/TableAnnotation.pm",
+         "version" : 0
       },
       "NGS::Tools::ANNOVAR::Utilities" : {
-         "file" : "lib/NGS/Tools/ANNOVAR/Utilities.pm"
+         "file" : "lib/NGS/Tools/ANNOVAR/Utilities.pm",
+         "version" : 0
       }
    },
    "release_status" : "stable",

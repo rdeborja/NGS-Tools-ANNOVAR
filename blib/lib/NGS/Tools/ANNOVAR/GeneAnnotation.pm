@@ -1,4 +1,4 @@
-package NGS::Tools::ANNOVAR::TableAnnotation;
+package NGS::Tools::ANNOVAR::GeneAnnotation;
 use Moose::Role;
 use MooseX::Params::Validate;
 
@@ -10,127 +10,104 @@ use File::Basename;
 
 =head1 NAME
 
-NGS::Tools::ANNOVAR::TableAnnotation
+NGS::Tools::ANNOVAR::GeneAnnotation
 
 =head1 SYNOPSIS
 
-A Perl Moose Role that annotates an ANNOVAR input file using the table_annovar.pl program.
+A Perl Moose role to interface with the ANNOVAR suite of tools.
 
 =head1 ATTRIBUTES AND DELEGATES
 
 =head1 SUBROUTINES/METHODS
 
-=head2 $obj->annotate_variants_with_gene_info_and_variant_databases()
+=head2 $obj->annotate_variants_with_gene_info()
 
-Use the table_annovar.pl program to annotate an ANNOVAR input file with gene information and
-annotations from various databases.
+Annotate variants with gene based annotations using ANNOVAR.
 
 =head3 Arguments:
 
 =over 2
 
-=item * file: input file to process
-
-=item * protocol: [ArrayRef] contains a list of valid ANNOVAR databases to process
-
-=item * operation: [ArrayRef] contains a list of characters corresponding to the protocols
-
-=item * database_dir: [Str] the full path to the ANNOVAR database directory
-
-=item * buildver: [Str] genome build version (default: hg19)
-
-=item * annovar_program: [Str] full path to the annovar program table_annovar.pl (default: table_annovar.pl)
-
-=item * target: [Str] name of BED file target to use (default: '')
-
-=back
-
-=head3 Return Value
-
-=over 2
-
-A hash reference containing the following keys:
-
-=item * cmd: command to execute
-
-=item * output: name of output file
+=item * arg: argument
 
 =back
 
 =cut
 
-sub annotate_variants_with_gene_info_and_variant_databases {
+sub annotate_variants_with_gene_info {
 	my $self = shift;
 	my %args = validated_hash(
 		\@_,
-		file => {
-			isa         => 'Str',
-			required    => 1
-			},
-		protocol => {
-			isa			=> 'ArrayRef',
-			required	=> 0,
-			default		=> ['refGene', 'ensGene', 'snp132', '1000g2012feb_all', 'esp6500si_all', 'cg69', 'cosmic67']
-			},
-		operation => {
-			isa			=> 'ArrayRef',
-			required	=> 0,
-			default		=> ['g', 'g', 'f', 'f', 'f', 'f', 'f']
-			},
-		database_dir => {
+		input => {
 			isa			=> 'Str',
-			required	=> 0,
-			default     => '/hpf/largeprojects/adam/ref_data/homosapiens/ucsc/hg19/annovar/20140212/humandb/'
+			required	=> 1
 			},
 		buildver => {
+			isa         => 'Str',
+			required    => 0,
+			default     => 'hg19'
+			},
+		sample => {
+			isa			=> 'Str',
+			required	=> 1
+			},
+		dbtype => {
 			isa			=> 'Str',
 			required	=> 0,
-			default		=> 'hg19'
+			default		=> 'refGene'
 			},
-		annovar_program => {
-			isa			=> 'Str',
-			required	=> 0,
-			default		=> 'table_annovar.pl'
-			},
-		target => {
+		output => {
 			isa			=> 'Str',
 			required	=> 0,
 			default		=> ''
+			},
+		db => {
+			isa			=> 'Str',
+			required	=> 0,
+			default		=> '${ANNOVARROOT}/humandb/'
+			},
+		annovar => {
+			isa			=> 'Str',
+			required	=> 0,
+			default		=> 'annotate_variation.pl'
 			}
 		);
 
-	# if the target argument is passed with a non-empty string, add the -bed parameter
-	# to the table_annovar.pl program and include 
-	if ($args{'target'} ne '') {
-		push(@{ $args{'protocol'} }, 'bed');
-		push(@{ $args{'operation'} }, 'r')
-		}
-	my $protocol = join(',', @{ $args{'protocol'} });
-	my $operation = join(',', @{ $args{'operation'} });
-	my $program = $args{'annovar_program'};
-	my $cmd = join(' ',
-		$program,
-		$args{'file'},
-		$args{'database_dir'},
-		'--protocol', $protocol,
-		'--operation', $operation,
-		'--buildver', $args{'buildver'},
-		'--remove',
-		'--otherinfo'
-		);
-
-	# we can add a single custom BED file and use this as an annotation
-	if ($args{'target'} ne '') {
+	my $output;
+	my %return_values;
+	my $cmd;
+	if ('' ne $args{'output'}) {
+		$output = $args{'output'};
 		$cmd = join(' ',
-			$cmd,
-			'--bedfile', $args{'target'}
+			$args{'annovar'},
+			$args{'input'},
+			'--buildver', $args{'buildver'},
+			'--geneanno',
+			'--dbtype', 'refGene',
+			'-out', $args{'sample'},
+			$args{'db'}
+			);
+		%return_values = (
+			cmd => $cmd,
+			variant => join('', $output, '.variant_function'),
+			exonic => join('', $output, '.exonic_variant_function') 
 			);
 		}
-
-	my %return_values = (
-		cmd => $cmd,
-		output => join('.', $args{'file'}, 'hg19_multianno.txt')
-		);
+	else {
+		$cmd = join(' ',
+			$args{'annovar'},
+			$args{'input'},
+			'--buildver', $args{'buildver'},
+			'--geneanno',
+			'--dbtype', 'refGene',
+			$args{'db'}
+			);
+		%return_values = (
+			cmd => $cmd,
+			variant => join('', $args{'input'}, '.variant_function'),
+			exonic => join('', $args{'input'}, '.exonic_variant_function')
+			);
+		}
 
 	return(\%return_values);
 	}
@@ -145,8 +122,6 @@ Dr. Adam Shlien, PI -- The Hospital for Sick Children
 
 Dr. Roland Arnold -- The Hospital for Sick Children
 
-Andrej Rosic -- The Hospital for Sick Children, Waterloo University
-
 =head1 BUGS
 
 Please report any bugs or feature requests to C<bug-test-test at rt.cpan.org>, or through
@@ -157,7 +132,7 @@ automatically be notified of progress on your bug as I make changes.
 
 You can find documentation for this module with the perldoc command.
 
-    perldoc NGS::Tools::ANNOVAR::TableAnnotation
+    perldoc NGS::Tools::ANNOVAR::GeneAnnotation
 
 You can also look for information at:
 
@@ -227,4 +202,4 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 no Moose::Role;
 
-1; # End of NGS::Tools::ANNOVAR::TableAnnotation
+1; # End of NGS::Tools::ANNOVAR::GeneAnnotation

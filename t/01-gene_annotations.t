@@ -32,7 +32,6 @@ my $annovar_gene_run = $annovar->annotate_variants_with_gene_info(
 	input => $input,
 	sample => $sample
 	);
-
 my $expected_cmd = join(' ',
 	'annotate_variation.pl',
 	'input.txt',
@@ -41,9 +40,4 @@ my $expected_cmd = join(' ',
 	'--dbtype refGene',
 	'${ANNOVARROOT}/humandb/'
 	);
-
 is($annovar_gene_run->{'cmd'}, $expected_cmd, 'ANNOVAR command matches expected');
-
-SKIP: {
-
-	}

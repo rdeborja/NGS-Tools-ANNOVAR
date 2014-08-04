@@ -4,3 +4,13 @@ Revision history for NGS-Tools-ANNOVAR
         Initial development.  Currently wraps the table_annovar.pl and the
         annotate_variation.pl scripts.
 
+0.02    2014-07-24
+        Added ability to pass a target file in BED format to the method
+        annotate_variants_with_gene_info_and_variant_databases for custom
+        annotations.
+
+0.03    2014-08-03
+        Added POD to annotate_variants_wiht_gene_info_and_variant_databases
+
+0.04    2014-08-03
+        Cleaned up the code for handling BED files.

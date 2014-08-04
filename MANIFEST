@@ -3,11 +3,11 @@ Changes
 lib/NGS/Tools/ANNOVAR.pm
 lib/NGS/Tools/ANNOVAR/GeneAnnotation.pm
 lib/NGS/Tools/ANNOVAR/TableAnnotation.pm
-lib/NGS/Tools/ANNOVAR/Utilities.pm
+Makefile.PL
 MANIFEST			This list of files
+META.json
+META.yml
 README
 t/01-gene_annotations.t
 t/02-table_annotations.t
-Makefile.PL
-META.yml
-META.json
+t/example/target/target.txt

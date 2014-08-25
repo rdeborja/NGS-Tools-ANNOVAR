@@ -27,18 +27,20 @@ my $file = 'annovar.input.txt';
 my $annovar_run = $annovar->annotate_variants_with_gene_info_and_variant_databases(
 	file => $file,
 	database_dir => "$Bin/example/target",
-	target => 'target.txt'
+	target => 'target.txt',
+	vcf => 'filter.vcf'
 	);
 my $expected_cmd = join(' ',
 	'table_annovar.pl',
 	'annovar.input.txt',
 	"$Bin/example/target",
-	'--protocol refGene,ensGene,snp132,1000g2012feb_all,esp6500si_all,cg69,cosmic67,bed',
-	'--operation g,g,f,f,f,f,f,r',
+	'--protocol refGene,ensGene,snp132,1000g2012feb_all,esp6500si_all,cg69,cosmic67,bed,vcf',
+	'--operation g,g,f,f,f,f,f,r,f',
 	'--buildver hg19',
 	'--remove',
 	'--otherinfo',
-	'--bedfile target.txt'
+	'--bedfile target.txt',
+	'--vcfdbfile filter.vcf'
 	);
 
 is($annovar_run->{'cmd'}, $expected_cmd, "ANNOVAR command matches expected");

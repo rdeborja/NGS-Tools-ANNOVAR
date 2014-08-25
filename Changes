@@ -14,3 +14,8 @@ Revision history for NGS-Tools-ANNOVAR
 
 0.04    2014-08-03
         Cleaned up the code for handling BED files.
+
+0.06    2014-08-25
+        Added capability to use VCF as an input and output format.  This works
+        with the latest version (as of 2014-08-25) of ANNOVAR.
+        

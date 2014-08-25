@@ -43,16 +43,13 @@
    "provides" : {
       "NGS::Tools::ANNOVAR" : {
          "file" : "lib/NGS/Tools/ANNOVAR.pm",
-         "version" : "0.03"
+         "version" : "0.06"
       },
       "NGS::Tools::ANNOVAR::GeneAnnotation" : {
          "file" : "lib/NGS/Tools/ANNOVAR/GeneAnnotation.pm"
       },
       "NGS::Tools::ANNOVAR::TableAnnotation" : {
          "file" : "lib/NGS/Tools/ANNOVAR/TableAnnotation.pm"
-      },
-      "NGS::Tools::ANNOVAR::Utilities" : {
-         "file" : "lib/NGS/Tools/ANNOVAR/Utilities.pm"
       }
    },
    "release_status" : "stable",
@@ -61,5 +58,5 @@
          "http://www.perlfoundation.org/artistic_license_2_0"
       ]
    },
-   "version" : "0.03"
+   "version" : "0.06"
 }

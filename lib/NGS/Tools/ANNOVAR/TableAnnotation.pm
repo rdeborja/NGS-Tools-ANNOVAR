@@ -96,6 +96,11 @@ sub annotate_variants_with_gene_info_and_variant_databases {
 			isa			=> 'Str',
 			required	=> 0,
 			default		=> ''
+			},
+		vcf => {
+			isa			=> 'Str',
+			required	=> 0,
+			default		=> ''
 			}
 		);
 
@@ -104,6 +109,11 @@ sub annotate_variants_with_gene_info_and_variant_databases {
 	if ($args{'target'} ne '') {
 		push(@{ $args{'protocol'} }, 'bed');
 		push(@{ $args{'operation'} }, 'r')
+		}
+	# a VCF file can be used as a filter file, this will annotate the 
+	if ($args{'vcf'} ne '') {
+		push(@{ $args{'protocol'} }, 'vcf');
+		push(@{ $args{'operation'} }, 'f');
 		}
 	my $protocol = join(',', @{ $args{'protocol'} });
 	my $operation = join(',', @{ $args{'operation'} });
@@ -126,6 +136,22 @@ sub annotate_variants_with_gene_info_and_variant_databases {
 			'--bedfile', $args{'target'}
 			);
 		}
+	# next we can add a single VCF file and use this for annotation/filter purposes
+	if ($args{'vcf'} ne '') {
+		$cmd = join(' ',
+			$cmd,
+			'--vcfdbfile', $args{'vcf'}
+			);
+		}
+
+	# check if the input file is a VCF, if it is a VCF file, add the -vcfinput argument
+	# to the command
+	if ($args{'file'} =~ m/\.vcf$/) {
+		$cmd = join(' ',
+			$cmd,
+			'-vcfinput'
+			);
+		}
 
 	my %return_values = (
 		cmd => $cmd,
@@ -142,8 +168,6 @@ Richard de Borja, C<< <richard.deborja at sickkids.ca> >>
 =head1 ACKNOWLEDGEMENT
 
 Dr. Adam Shlien, PI -- The Hospital for Sick Children
-
-Dr. Roland Arnold -- The Hospital for Sick Children
 
 Andrej Rosic -- The Hospital for Sick Children, Waterloo University
 

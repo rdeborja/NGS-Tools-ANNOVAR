@@ -21,15 +21,12 @@ name: NGS-Tools-ANNOVAR
 provides:
   NGS::Tools::ANNOVAR:
     file: lib/NGS/Tools/ANNOVAR.pm
-    version: 0.03
+    version: 0.06
   NGS::Tools::ANNOVAR::GeneAnnotation:
     file: lib/NGS/Tools/ANNOVAR/GeneAnnotation.pm
     version: 0
   NGS::Tools::ANNOVAR::TableAnnotation:
     file: lib/NGS/Tools/ANNOVAR/TableAnnotation.pm
-    version: 0
-  NGS::Tools::ANNOVAR::Utilities:
-    file: lib/NGS/Tools/ANNOVAR/Utilities.pm
     version: 0
 requires:
   File::Basename: 0
@@ -40,4 +37,4 @@ requires:
   namespace::autoclean: 0
 resources:
   license: http://www.perlfoundation.org/artistic_license_2_0
-version: 0.03
+version: 0.06

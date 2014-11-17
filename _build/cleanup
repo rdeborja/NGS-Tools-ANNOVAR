@@ -1,4 +1,0 @@
-do{ my $x = {
-       'NGS-Tools-ANNOVAR-*' => 1
-     };
-$x; }

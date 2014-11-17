@@ -11,15 +11,13 @@ use autodie;
 
 =head1 NAME
 
-NGS::Tools::ANNOVAR - The great new NGS::Tools::ANNOVAR!
+NGS::Tools::ANNOVAR - A Perl wrapper for the ANNOVAR variant annotation package.
 
 =head1 VERSION
 
-Version 0.06
-
 =cut
 
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 
 
 =head1 SYNOPSIS

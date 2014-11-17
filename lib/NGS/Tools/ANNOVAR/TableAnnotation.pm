@@ -43,6 +43,8 @@ annotations from various databases.
 
 =item * target: [Str] name of BED file target to use (default: '')
 
+=item * vcf: [Str] name of VCF file to use for annotation purposes (default: '')
+
 =back
 
 =head3 Return Value

@@ -1,5 +1,5 @@
 {
-   "abstract" : "The great new NGS::Tools::ANNOVAR!",
+   "abstract" : "Perl wrapper for ANNOVAR",
    "author" : [
       "Richard de Borja <richard.deborja@sickkids.ca>"
    ],
@@ -31,10 +31,10 @@
       },
       "runtime" : {
          "requires" : {
-            "File::Basename" : "0",
-            "Moose" : "0",
-            "Moose::Role" : "0",
-            "MooseX::Params::Validate" : "0",
+            "File::Basename" : "2.8",
+            "Moose" : "2",
+            "Moose::Role" : "2",
+            "MooseX::Params::Validate" : "0.1",
             "autodie" : "0",
             "namespace::autoclean" : "0"
          }
@@ -43,13 +43,16 @@
    "provides" : {
       "NGS::Tools::ANNOVAR" : {
          "file" : "lib/NGS/Tools/ANNOVAR.pm",
-         "version" : "0.06"
+         "version" : "0.07"
       },
       "NGS::Tools::ANNOVAR::GeneAnnotation" : {
          "file" : "lib/NGS/Tools/ANNOVAR/GeneAnnotation.pm"
       },
       "NGS::Tools::ANNOVAR::TableAnnotation" : {
          "file" : "lib/NGS/Tools/ANNOVAR/TableAnnotation.pm"
+      },
+      "NGS::Tools::ANNOVAR::Utilities" : {
+         "file" : "lib/NGS/Tools/ANNOVAR/Utilities.pm"
       }
    },
    "release_status" : "stable",
@@ -58,5 +61,5 @@
          "http://www.perlfoundation.org/artistic_license_2_0"
       ]
    },
-   "version" : "0.06"
+   "version" : "0.07"
 }

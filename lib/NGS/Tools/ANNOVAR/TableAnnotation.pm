@@ -29,29 +29,29 @@ annotations from various databases.
 
 =over 2
 
-=item * file: input file to process
+=item * file:            [Str] input file to process
 
-=item * protocol: [ArrayRef] contains a list of valid ANNOVAR databases to process
+=item * protocol:        [ArrayRef] contains a list of valid ANNOVAR databases to process
 
-=item * operation: [ArrayRef] contains a list of characters corresponding to the protocols
+=item * operation:       [ArrayRef] contains a list of characters corresponding to the protocols
 
-=item * database_dir: [Str] the full path to the ANNOVAR database directory
+=item * database_dir:    [Str] the full path to the ANNOVAR database directory
 
-=item * buildver: [Str] genome build version (default: hg19)
+=item * buildver:        [Str] genome build version (default: hg19)
 
 =item * annovar_program: [Str] full path to the annovar program table_annovar.pl (default: table_annovar.pl)
 
-=item * target: [Str] name of BED file target to use (default: '')
+=item * target:          [Str] name of BED file target to use (default: '')
 
-=item * vcf: [Str] name of VCF file to use for annotation purposes (default: '')
+=item * vcf:             [Str] name of VCF file to use for annotation purposes (default: '')
 
 =back
-
+`4
 =head3 Return Value
 
-=over 2
-
 A hash reference containing the following keys:
+
+=over 2
 
 =item * cmd: command to execute
 
@@ -62,106 +62,106 @@ A hash reference containing the following keys:
 =cut
 
 sub annotate_variants_with_gene_info_and_variant_databases {
-	my $self = shift;
-	my %args = validated_hash(
-		\@_,
-		file => {
-			isa         => 'Str',
-			required    => 1
-			},
-		protocol => {
-			isa			=> 'ArrayRef',
-			required	=> 0,
-			default		=> ['refGene', 'ensGene', 'snp132', '1000g2012feb_all', 'esp6500si_all', 'cg69', 'cosmic67']
-			},
-		operation => {
-			isa			=> 'ArrayRef',
-			required	=> 0,
-			default		=> ['g', 'g', 'f', 'f', 'f', 'f', 'f']
-			},
-		database_dir => {
-			isa			=> 'Str',
-			required	=> 0,
-			default     => '/hpf/largeprojects/adam/ref_data/homosapiens/ucsc/hg19/annovar/20140212/humandb/'
-			},
-		buildver => {
-			isa			=> 'Str',
-			required	=> 0,
-			default		=> 'hg19'
-			},
-		annovar_program => {
-			isa			=> 'Str',
-			required	=> 0,
-			default		=> 'table_annovar.pl'
-			},
-		target => {
-			isa			=> 'Str',
-			required	=> 0,
-			default		=> ''
-			},
-		vcf => {
-			isa			=> 'Str',
-			required	=> 0,
-			default		=> ''
-			}
-		);
+    my $self = shift;
+    my %args = validated_hash(
+        \@_,
+        file => {
+            isa         => 'Str',
+            required    => 1
+            },
+        protocol => {
+            isa         => 'ArrayRef',
+            required    => 0,
+            default     => ['refGene', 'ensGene', 'snp132', '1000g2012feb_all', 'esp6500si_all', 'cg69', 'cosmic67']
+            },
+        operation => {
+            isa         => 'ArrayRef',
+            required    => 0,
+            default     => ['g', 'g', 'f', 'f', 'f', 'f', 'f']
+            },
+        database_dir => {
+            isa         => 'Str',
+            required    => 0,
+            default     => '/hpf/largeprojects/adam/ref_data/homosapiens/ucsc/hg19/annovar/20140212/humandb/'
+            },
+        buildver => {
+            isa         => 'Str',
+            required    => 0,
+            default     => 'hg19'
+            },
+        annovar_program => {
+            isa         => 'Str',
+            required    => 0,
+            default     => 'table_annovar.pl'
+            },
+        target => {
+            isa         => 'Str',
+            required    => 0,
+            default     => ''
+            },
+        vcf => {
+            isa         => 'Str',
+            required    => 0,
+            default     => ''
+            }
+        );
 
-	# if the target argument is passed with a non-empty string, add the -bed parameter
-	# to the table_annovar.pl program and include 
-	if ($args{'target'} ne '') {
-		push(@{ $args{'protocol'} }, 'bed');
-		push(@{ $args{'operation'} }, 'r')
-		}
-	# a VCF file can be used as a filter file, this will annotate the 
-	if ($args{'vcf'} ne '') {
-		push(@{ $args{'protocol'} }, 'vcf');
-		push(@{ $args{'operation'} }, 'f');
-		}
-	my $protocol = join(',', @{ $args{'protocol'} });
-	my $operation = join(',', @{ $args{'operation'} });
-	my $program = $args{'annovar_program'};
-	my $cmd = join(' ',
-		$program,
-		$args{'file'},
-		$args{'database_dir'},
-		'--protocol', $protocol,
-		'--operation', $operation,
-		'--buildver', $args{'buildver'},
-		'--remove',
-		'--otherinfo'
-		);
+    # if the target argument is passed with a non-empty string, add the -bed parameter
+    # to the table_annovar.pl program and include 
+    if ($args{'target'} ne '') {
+        push(@{ $args{'protocol'} }, 'bed');
+        push(@{ $args{'operation'} }, 'r')
+        }
+    # a VCF file can be used as a filter file, this will annotate the 
+    if ($args{'vcf'} ne '') {
+        push(@{ $args{'protocol'} }, 'vcf');
+        push(@{ $args{'operation'} }, 'f');
+        }
+    my $protocol = join(',', @{ $args{'protocol'} });
+    my $operation = join(',', @{ $args{'operation'} });
+    my $program = $args{'annovar_program'};
+    my $cmd = join(' ',
+        $program,
+        $args{'file'},
+        $args{'database_dir'},
+        '--protocol', $protocol,
+        '--operation', $operation,
+        '--buildver', $args{'buildver'},
+        '--remove',
+        '--otherinfo'
+        );
 
-	# we can add a single custom BED file and use this as an annotation
-	if ($args{'target'} ne '') {
-		$cmd = join(' ',
-			$cmd,
-			'--bedfile', $args{'target'}
-			);
-		}
-	# next we can add a single VCF file and use this for annotation/filter purposes
-	if ($args{'vcf'} ne '') {
-		$cmd = join(' ',
-			$cmd,
-			'--vcfdbfile', $args{'vcf'}
-			);
-		}
+    # we can add a single custom BED file and use this as an annotation
+    if ($args{'target'} ne '') {
+        $cmd = join(' ',
+            $cmd,
+            '--bedfile', $args{'target'}
+            );
+        }
+    # next we can add a single VCF file and use this for annotation/filter purposes
+    if ($args{'vcf'} ne '') {
+        $cmd = join(' ',
+            $cmd,
+            '--vcfdbfile', $args{'vcf'}
+            );
+        }
 
-	# check if the input file is a VCF, if it is a VCF file, add the -vcfinput argument
-	# to the command
-	if ($args{'file'} =~ m/\.vcf$/) {
-		$cmd = join(' ',
-			$cmd,
-			'-vcfinput'
-			);
-		}
+    # check if the input file is a VCF, if it is a VCF file, add the -vcfinput argument
+    # to the command
+    if ($args{'file'} =~ m/\.vcf$/) {
+        $cmd = join(' ',
+            $cmd,
+            '-vcfinput'
+            );
+        }
 
-	my %return_values = (
-		cmd => $cmd,
-		output => join('.', $args{'file'}, 'hg19_multianno.txt')
-		);
+    my %return_values = (
+        cmd => $cmd,
+        output => join('.', $args{'file'}, 'hg19_multianno.txt')
+        );
 
-	return(\%return_values);
-	}
+    return(\%return_values);
+    }
 
 =head1 AUTHOR
 

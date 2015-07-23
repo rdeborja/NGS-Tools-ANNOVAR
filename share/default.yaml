@@ -1,0 +1,23 @@
+---
+protocol:
+    - refGene
+    - ensGene
+    - snp132
+    - 1000g2012feb_all
+    - esp6500si_all
+    - cg69
+    - cosmic67
+    - clinvar_20150330
+    - exac
+operation:
+    - g
+    - g
+    - f
+    - f
+    - f
+    - f
+    - f
+    - f
+    - f
+database_dir: /hpf/largeprojects/adam/local/reference/homosapiens/ucsc/hg19/annovar/humandb
+buildver: hg19

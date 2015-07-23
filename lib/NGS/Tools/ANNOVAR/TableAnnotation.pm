@@ -71,23 +71,19 @@ sub annotate_variants_with_gene_info_and_variant_databases {
             },
         protocol => {
             isa         => 'ArrayRef',
-            required    => 0,
-            default     => ['refGene', 'ensGene', 'snp132', '1000g2012feb_all', 'esp6500si_all', 'cg69', 'cosmic67']
+            required    => 1
             },
         operation => {
             isa         => 'ArrayRef',
-            required    => 0,
-            default     => ['g', 'g', 'f', 'f', 'f', 'f', 'f']
+            required    => 1
             },
         database_dir => {
             isa         => 'Str',
-            required    => 0,
-            default     => '/hpf/largeprojects/adam/ref_data/homosapiens/ucsc/hg19/annovar/20140212/humandb/'
+            required    => 1
             },
         buildver => {
             isa         => 'Str',
-            required    => 0,
-            default     => 'hg19'
+            required    => 1
             },
         annovar_program => {
             isa         => 'Str',

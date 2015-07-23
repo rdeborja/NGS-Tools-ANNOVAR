@@ -26,16 +26,19 @@ lives_ok
 my $file = 'annovar.input.txt';
 my $annovar_run = $annovar->annotate_variants_with_gene_info_and_variant_databases(
 	file => $file,
+	protocol => ['refGene', 'ensGene', 'snp132', '1000g2012feb_all', 'esp6500si_all', 'cg69', 'cosmic67', 'clinvar_20150330', 'exac'],
+	operation => ['g', 'g', 'f' ,'f', 'f', 'f', 'f', 'f', 'f'],
+	buildver => 'hg19',
 	database_dir => "$Bin/example/target",
-	target => 'target.txt',
-	vcf => 'filter.vcf'
+ 	target => 'target.txt',
+ 	vcf => 'filter.vcf'
 	);
 my $expected_cmd = join(' ',
 	'table_annovar.pl',
 	'annovar.input.txt',
 	"$Bin/example/target",
-	'--protocol refGene,ensGene,snp132,1000g2012feb_all,esp6500si_all,cg69,cosmic67,bed,vcf',
-	'--operation g,g,f,f,f,f,f,r,f',
+	'--protocol refGene,ensGene,snp132,1000g2012feb_all,esp6500si_all,cg69,cosmic67,clinvar_20150330,exac,bed,vcf',
+	'--operation g,g,f,f,f,f,f,f,f,r,f',
 	'--buildver hg19',
 	'--remove',
 	'--otherinfo',

@@ -31,6 +31,9 @@ my $builder = Module::Build->new(
     },
     add_to_cleanup     => [ 'NGS-Tools-ANNOVAR-*' ],
     create_makefile_pl => 'traditional',
+
+    # add a share directory with default configuration
+    share_dir => 'share'
 );
 
 $builder->create_build_script();

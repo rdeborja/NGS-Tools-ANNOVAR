@@ -3,6 +3,7 @@ use Moose;
 
 with 'NGS::Tools::ANNOVAR::GeneAnnotation';
 with 'NGS::Tools::ANNOVAR::TableAnnotation';
+with 'NGS::Tools::ANNOVAR::Config';
 
 use 5.006;
 use strict;
@@ -13,11 +14,11 @@ use autodie;
 
 NGS::Tools::ANNOVAR - A Perl wrapper for the ANNOVAR variant annotation package.
 
-=head1 VERSION
+=head1 VERSION 0.08
 
 =cut
 
-our $VERSION = '0.07';
+our $VERSION = '0.08';
 
 
 =head1 SYNOPSIS

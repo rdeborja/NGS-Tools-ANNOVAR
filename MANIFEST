@@ -1,6 +1,7 @@
 Build.PL
 Changes
 lib/NGS/Tools/ANNOVAR.pm
+lib/NGS/Tools/ANNOVAR/Config.pm
 lib/NGS/Tools/ANNOVAR/GeneAnnotation.pm
 lib/NGS/Tools/ANNOVAR/TableAnnotation.pm
 lib/NGS/Tools/ANNOVAR/Utilities.pm
@@ -9,6 +10,9 @@ MANIFEST			This list of files
 META.json
 META.yml
 README
+share/default.yaml
 t/01-gene_annotations.t
 t/02-table_annotations.t
+t/03-config.t
+t/04-class.t
 t/example/target/target.txt

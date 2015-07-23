@@ -22,3 +22,7 @@ Revision history for NGS-Tools-ANNOVAR
 0.07    2014-11-17
         Updated POD for annotate_variants_with_gene_info_and_variant_databases
         method.  Updated build dependencies.
+
+0.08    2015-07-23
+        Added method for handling YAML configuration file to establish
+        default values to mandatory arguments.`
